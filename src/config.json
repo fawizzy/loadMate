@@ -1,0 +1,38 @@
+{
+  "all_servers": [
+    {
+      "id": 0,
+      "url": "http://localhost:8000",
+      "connections": 0
+    },
+    {
+      "id": 1,
+      "url": "http://localhost:8001",
+      "connections": 0
+    },
+    {
+      "id": 2,
+      "url": "http://localhost:8002",
+      "connections": 0
+    }
+  ],
+  "healthy_servers": [
+    {
+      "id": 0,
+      "url": "http://localhost:8000",
+      "connections": 0
+    },
+    {
+      "id": 1,
+      "url": "http://localhost:8001",
+      "connections": 0
+    },
+    {
+      "id": 2,
+      "url": "http://localhost:8002",
+      "connections": 0
+    }
+  ],
+  "unhealthy_servers": [],
+  "algorithm": "least_connections"
+}
