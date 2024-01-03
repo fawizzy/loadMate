@@ -3,12 +3,12 @@
     {
       "id": 0,
       "url": "http://localhost:8000",
-      "connections": 0
+      "connections": -3
     },
     {
       "id": 1,
       "url": "http://localhost:8001",
-      "connections": 0
+      "connections": -1
     },
     {
       "id": 2,
@@ -20,12 +20,12 @@
     {
       "id": 0,
       "url": "http://localhost:8000",
-      "connections": 0
+      "connections": -3
     },
     {
       "id": 1,
       "url": "http://localhost:8001",
-      "connections": 0
+      "connections": -1
     },
     {
       "id": 2,
@@ -34,5 +34,5 @@
     }
   ],
   "unhealthy_servers": [],
-  "algorithm": "least_connections"
+  "algorithm": "round_robin"
 }

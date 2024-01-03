@@ -42,31 +42,32 @@ app.use(
     next: express.NextFunction
   ) => {
     try {
-      config = readJsonFileSync(filePath);
-      let server: any;
-      // Choose load balancer based on configured algorithm
-      switch (config["algorithm"]) {
-        case "random":
-          server = randomLoadBalancer.getNextServer();
-          break;
-        case "round_robin":
-          server = roundRobinLoadBalancer.getNextServer();
-          break;
-        case "least_connections":
-          server = leastConnectionLoadBalancer.getserverWithMinConnections();
-          break;
-        default:
-          server = config["healthy_servers"][0];
-          break;
-      }
-      handleNewConnection(server);
+      // config = readJsonFileSync(filePath);
+      // let server: any;
+      // // Choose load balancer based on configured algorithm
+      // switch (config["algorithm"]) {
+      //   case "random":
+      //     server = randomLoadBalancer.getNextServer();
+      //     break;
+      //   case "round_robin":
+      //     server = roundRobinLoadBalancer.getNextServer();
+      //     break;
+      //   case "least_connections":
+      //     server = leastConnectionLoadBalancer.getserverWithMinConnections();
+      //     break;
+      //   default:
+      //     server = config["healthy_servers"][0];
+      //     break;
+      // }
+      // console.log(server);
+      // handleNewConnection(server);
       const { originalUrl: url, method, body: data } = req;
-      const response = await requestAxios(
-        { url, method, data, server: server.url },
-        cpus().length
-      );
-      res.send(response);
-      handleConnectionClosed(server);
+      // const response = await requestAxios(
+      //   { url, method, data, server: "http://localhost:8000" },
+      //   cpus().length
+      // );
+      res.send("response");
+      // handleConnectionClosed(server);
     } catch (error) {
       next(error);
     }
