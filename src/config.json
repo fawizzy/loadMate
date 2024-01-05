@@ -3,7 +3,7 @@
     {
       "id": 0,
       "url": "http://localhost:8000",
-      "connections": 0
+      "connections": 1
     },
     {
       "id": 1,
@@ -20,7 +20,7 @@
     {
       "id": 0,
       "url": "http://localhost:8000",
-      "connections": 0
+      "connections": 1
     },
     {
       "id": 1,
