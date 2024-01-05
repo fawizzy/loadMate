@@ -5,12 +5,12 @@ export const checkServerHealth = async (
 ): Promise<string[]> => {
   const healthyServers: string[] = [];
 
-  const timeoutMs = 5000;
+  const timeoutMs = 200000;
 
   await Promise.all(
     servers.map(async (server) => {
       try {
-        const response = await axios.get(`${server["url"]}`, {
+        const response = await axios.get(`${server["url"]}/health`, {
           timeout: timeoutMs,
         });
 
@@ -18,7 +18,9 @@ export const checkServerHealth = async (
           healthyServers.push(server);
         }
       } catch (error) {
-        console.error(`Error checking server ${server}: ${error.message}`);
+        console.error(
+          `Error checking server ${server["url"]}: ${error.message}`
+        );
       }
     })
   );

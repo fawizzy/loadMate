@@ -4,7 +4,9 @@ import { parentPort } from "worker_threads";
 // Listen for messages from the parent thread
 parentPort.on("message", async ({ url, method, data, server }) => {
   // Perform the request operation and send the response back to the parent thread
+
   const response = await requestOperation(url, method, data, server);
+
   parentPort.postMessage(response["data"]);
 });
 

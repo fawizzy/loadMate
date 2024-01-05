@@ -11,6 +11,7 @@ export class RoundRobinLoadBalancer {
   }
 
   getNextServer(): string {
+    // console.log(RoundRobinState.getCurrentIndex());
     const nextServer = this.servers[RoundRobinState.getCurrentIndex()];
     RoundRobinState.incrementIndex(this.servers.length);
     return nextServer;

@@ -3,12 +3,12 @@
     {
       "id": 0,
       "url": "http://localhost:8000",
-      "connections": -3
+      "connections": 0
     },
     {
       "id": 1,
       "url": "http://localhost:8001",
-      "connections": -1
+      "connections": 0
     },
     {
       "id": 2,
@@ -20,12 +20,12 @@
     {
       "id": 0,
       "url": "http://localhost:8000",
-      "connections": -3
+      "connections": 0
     },
     {
       "id": 1,
       "url": "http://localhost:8001",
-      "connections": -1
+      "connections": 0
     },
     {
       "id": 2,
