@@ -1,22 +1,23 @@
 import * as cluster from "cluster";
-const thisCluster = cluster as any as cluster.Cluster;
-
 import * as express from "express";
 import * as dotenv from "dotenv";
+import { cpus } from "os";
+
 import { RoundRobinLoadBalancer } from "./algorithm/round_robin";
 import { RandomLoadBalancer } from "./algorithm/random";
+import { LeastConnectionLoadBalancer } from "./algorithm/least_connections";
 import { checkServerHealth } from "./utilities/healthcheck";
 import { readJsonFileSync, writeJsonFile } from "./utilities/handleJSON";
 import { requestAxios } from "./utilities/handleRequest";
-import { cpus } from "os";
-import { LeastConnectionLoadBalancer } from "./algorithm/least_connections";
 import {
   handleConnectionClosed,
   handleNewConnection,
 } from "./utilities/countConnections";
-import { Worker } from "worker_threads";
-import { url } from "inspector";
 
+// Type assertion for cluster
+const thisCluster = cluster as any as cluster.Cluster;
+
+// Master process - Fork worker processes
 if (thisCluster.isPrimary) {
   for (let i = 0; i < cpus().length; i++) {
     thisCluster.fork();
@@ -53,6 +54,7 @@ if (thisCluster.isPrimary) {
     ) => {
       try {
         let server: any;
+
         // Choose load balancer based on configured algorithm
         switch (config["algorithm"]) {
           case "random":
@@ -68,13 +70,23 @@ if (thisCluster.isPrimary) {
             server = config["healthy_servers"][0];
             break;
         }
+
+        // Handle connection
         handleNewConnection(server);
+
+        // Extract request details
         const { originalUrl: url, method, body: data } = req;
+
+        // Make request to chosen server
         const response = await requestAxios(
           { url, method, data, server: server.url },
           cpus().length
         );
+
+        // Send response to client
         res.send(response);
+
+        // Handle connection closure
         handleConnectionClosed(server);
       } catch (error) {
         if (error) {
@@ -96,6 +108,8 @@ if (thisCluster.isPrimary) {
   async function checkAndInitLoadBalancers() {
     try {
       config = readJsonFileSync(filePath);
+
+      // Check server health
       const healthyServers = await checkServerHealth(config["all_servers"]);
       config["healthy_servers"] = sortServersById(healthyServers);
 
@@ -107,6 +121,8 @@ if (thisCluster.isPrimary) {
       leastConnectionLoadBalancer = new LeastConnectionLoadBalancer(
         config["healthy_servers"]
       );
+
+      // Update configuration file
       writeJsonFile(filePath, config);
     } catch (error) {
       console.error(
@@ -116,6 +132,11 @@ if (thisCluster.isPrimary) {
     }
   }
 
+  /**
+   * Sort servers by ID
+   * @param servers Array of servers
+   * @returns Sorted array of servers
+   */
   function sortServersById(servers: any) {
     return servers.slice().sort((a: any, b: any) => a.id - b.id);
   }
