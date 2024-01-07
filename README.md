@@ -1,7 +1,7 @@
 
 # loadMate
 
-**loadMate** is a simple and scalable Node.js-based load balancer designed to distribute incoming traffic among multiple servers efficiently. Whether you are running a web application, API, or microservices, loadMate helps you achieve high availability and improved performance by intelligently distributing the load across your servers.
+**loadMate** is a simple and scalable Application layer load balancer designed to distribute incoming traffic among multiple servers efficiently. Whether you are running a web application, API, or microservices, loadMate helps you achieve high availability and improved performance by intelligently distributing the load across your servers.
 
 ## Demo
 
